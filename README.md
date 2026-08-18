@@ -1,17 +1,17 @@
-# ONESIP Official Website
+# ONESIP Official
 
-Rebuild of the ONESIP consumer website for deployment on Vercel and later import into Odoo Website.
+Static staging website for the ONESIP Rotterdam site migration to Odoo.
 
-## Current workflow
+- Production staging: https://onesip-two.vercel.app/
+- Online ordering: https://onesip-m.eu.restosuite.ai/
+- Final domain after migration: https://www.onesip.nl/
 
-1. Build and review the static site on Vercel.
-2. Keep the current Wix site live during development.
-3. Import the approved public Vercel site into Odoo.
-4. Point `www.onesip.nl` to the OneSip website in Odoo after final QA.
+## Structure
+- `index.html` — homepage
+- `menu.html` — curated menu
+- `about.html` — About Us and Brand Story
+- `visit.html` — Rotterdam store and pickup
+- `franchise.html` — franchise information
+- `assets/` — verified product imagery
 
-## Links
-
-- Current site: https://www.onesip.nl/
-- Live online ordering: https://onesip-m.eu.restosuite.ai/
-
-The website is intentionally built with simple HTML/CSS and minimal JavaScript to keep it friendly to Odoo's website import workflow.
+The live ordering system remains the source of truth for current products, options and availability.

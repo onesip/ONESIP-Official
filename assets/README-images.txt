@@ -1,0 +1,1 @@
+Product image handling note: use high-quality JPEG assets in this folder. Do not replace them with ultra-low-quality WebP encodes. Images are sourced from the current OneSip product-image pack and should be shown with object-fit: contain.

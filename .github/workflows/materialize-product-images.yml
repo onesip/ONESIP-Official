@@ -1,0 +1,59 @@
+name: Materialize verified product images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/materialize-product-images.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Decode verified Git blobs into JPG assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p assets
+
+          fetch_blob() {
+            sha="$1"
+            dest="$2"
+            gh api "repos/${GITHUB_REPOSITORY}/git/blobs/${sha}" --jq '.content' | tr -d '\n' | base64 -d > "$dest"
+          }
+
+          fetch_blob 28903d32fe2d096a0a9e2454a5421e6e5ef6b1aa assets/golden-mango-hero.jpg
+          fetch_blob b30f883fc1ebad5b1b893e16c93f86b6a1b23ef8 assets/matcha-cloud-top.jpg
+          fetch_blob e9d73f49b318189496b7a8a0eb771ffb10be5a07 assets/grape-cheezo.jpg
+          fetch_blob f6d1a0ce0619d7aa65920676661f47f9a045acf5 assets/classic-milk-tea.jpg
+          fetch_blob dd3e87cbf800829b74caeba5965a9f7bf8a2d05a assets/fresh-lemonade.jpg
+
+          file assets/golden-mango-hero.jpg assets/matcha-cloud-top.jpg assets/grape-cheezo.jpg assets/classic-milk-tea.jpg assets/fresh-lemonade.jpg
+          test "$(wc -c < assets/golden-mango-hero.jpg)" -gt 50000
+          test "$(wc -c < assets/matcha-cloud-top.jpg)" -gt 70000
+          test "$(wc -c < assets/grape-cheezo.jpg)" -gt 70000
+          test "$(wc -c < assets/classic-milk-tea.jpg)" -gt 70000
+          test "$(wc -c < assets/fresh-lemonade.jpg)" -gt 90000
+
+      - name: Commit verified JPG assets
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/golden-mango-hero.jpg assets/matcha-cloud-top.jpg assets/grape-cheezo.jpg assets/classic-milk-tea.jpg assets/fresh-lemonade.jpg
+          if git diff --cached --quiet; then
+            echo "No image changes to commit."
+            exit 0
+          fi
+          git commit -m "Materialize verified high-quality product JPGs [skip ci]"
+          git push

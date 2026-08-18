@@ -1,0 +1,1 @@
+V3 image set uses high-resolution JPEGs and avoids repeated Matcha Jasmine imagery.

@@ -1,0 +1,1 @@
+Replacing low-quality WebP product images with verified high-quality JPEGs sourced from the current OneSip product-image pack. Homepage will use distinct products: Golden Mango, Matcha Cloud Top, Grape Cheezo, Classic Bubble Milk Tea, and Hand-Crushed Lemon Tea.
